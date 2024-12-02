@@ -28,9 +28,10 @@ def is_safe_fuzzy_nums(nums: list[int]) -> bool:
     return True
   
   # Try running the original is_safe_nums on the list with each failed index chopped out.
-  indices_to_try = [i for i in [fail_incr_idx, fail_close_idx, fail_decr_idx] if i != -1]
+  indices_to_try = [i for i in [fail_incr_idx, fail_incr_idx - 1, fail_close_idx, fail_close_idx - 1, fail_decr_idx, fail_decr_idx - 1] if i >= 0]
   for i in indices_to_try:
-    attempt = is_safe_nums(nums[0:i] + nums[i+1:])
+    snipped = nums[0:i] + nums[i+1:]
+    attempt = is_safe_nums(snipped)
     if attempt:
       return True
 
@@ -45,19 +46,19 @@ def is_safe_nums(nums: list[int]) -> bool:
 def all_increasing(nums: list[int]) -> int:
   for i, (a, b) in enumerate(zip(nums[:-1], nums[1:])):
     if a >= b:
-      return i
+      return i + 1
   return -1
 
 def all_decreasing(nums: list[int]) -> bool:
   for i, (a, b) in enumerate(zip(nums[:-1], nums[1:])):
     if a <= b:
-      return i
+      return i + 1
   return -1
 
 def all_close(nums: list[int]) -> bool:
   for i, (a, b) in enumerate(zip(nums[:-1], nums[1:])):
     if abs(a-b) > 3:
-      return i
+      return i + 1
   return -1
 
 TEST_INPUT = dedent("""
@@ -86,7 +87,15 @@ def part1():
   assert result == 516 # First try!
 
 def part2():
-  pass
+  with Path("day-02/input.txt").open('rt') as f:
+    input = [l for l in f.read().split("\n") if l != ""]
+  result = d2p2(input)
+  print(f"Number of safe lines (removing 1 bad level) is {result}")
+  assert result != 549 # First attempt isn't right.
+  assert result != 551 # Second attempt also isn't right. (Tried using i + 1 for that.)
+  assert result == 561 # Third attempt was right. Try removing both i and i + 1 when they fail.
 
 if __name__ == "__main__":
   test()
+  part1()
+  part2()
