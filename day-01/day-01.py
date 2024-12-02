@@ -1,3 +1,4 @@
+from collections import Counter
 from textwrap import dedent
 from pathlib import Path
 
@@ -21,7 +22,22 @@ def day1part1(input: str) -> int:
   return final
 
 def day1part2(input: str) -> int:
-  pass
+  left, right = [], []
+  for line in input.split('\n'):
+    if "   " not in line:
+      continue
+    [a, b] = line.split('   ') # All the inputs are separated by three spaces.
+    left.append(int(a))
+    right.append(int(b))
+
+  # Get the counts of all the numbers in the right list. That's the "similarity".
+  similarity = Counter()
+  for r in right:
+    similarity[r] += 1
+
+  result = sum(l * similarity[l] for l in left)
+  return result
+
 
 def load_input() -> str:
   with Path('day-01/input.txt').open('rt') as f:
@@ -41,7 +57,8 @@ def test():
   print("Tests pass")
 
 def test_part2():
-  assert day1part2(TEST_INPUT) == 31
+  actual = day1part2(TEST_INPUT)
+  assert actual == 31
 
 def part1():
   part1 = load_input()
