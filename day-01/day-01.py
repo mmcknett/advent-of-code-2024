@@ -2,7 +2,7 @@ from textwrap import dedent
 from pathlib import Path
 
 
-def day1(input: str) -> int:
+def day1part1(input: str) -> int:
   left, right = [], []
   for line in input.split('\n'):
     if "   " not in line:
@@ -20,8 +20,11 @@ def day1(input: str) -> int:
 
   return final
 
-def load_part1() -> str:
-  with Path('day-01/part1.txt').open('rt') as f:
+def day1part2(input: str) -> int:
+  pass
+
+def load_input() -> str:
+  with Path('day-01/input.txt').open('rt') as f:
     return f.read()
 
 TEST_INPUT = dedent("""
@@ -34,12 +37,15 @@ TEST_INPUT = dedent("""
   """)
 
 def test():
-  assert day1(TEST_INPUT) == 11
+  assert day1part1(TEST_INPUT) == 11
   print("Tests pass")
 
+def test_part2():
+  assert day1part2(TEST_INPUT) == 31
+
 def part1():
-  part1 = load_part1()
-  result = day1(part1)
+  part1 = load_input()
+  result = day1part1(part1)
   # 52658 is too low. We need to take the *absolute value* of the difference.
   # That did it. It's 1319616.
   print(f"Part 1 result: {result}")
@@ -49,4 +55,4 @@ def part2():
   pass
 
 if __name__ == "__main__":
-  part1()
+  test_part2()
