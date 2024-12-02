@@ -48,6 +48,7 @@ def part1():
     input = [l for l in f.read().split("\n") if l != ""]
   result = d2p1(input)
   print(f"Number of safe lines is {result}")
+  assert result == 516 # First try!
 
 if __name__ == "__main__":
-  test()
+  part1()
