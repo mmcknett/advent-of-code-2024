@@ -61,15 +61,18 @@ def test_part2():
   assert actual == 31
 
 def part1():
-  part1 = load_input()
-  result = day1part1(part1)
+  input = load_input()
+  result = day1part1(input)
   # 52658 is too low. We need to take the *absolute value* of the difference.
   # That did it. It's 1319616.
   print(f"Part 1 result: {result}")
   assert result == 1319616
 
 def part2():
-  pass
+  input = load_input()
+  result = day1part2(input)
+  print(f"Part2 result is {result}")
+  assert result == 27267728 # First attempt!
 
 if __name__ == "__main__":
-  test_part2()
+  part2()
