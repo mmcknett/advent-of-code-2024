@@ -1,4 +1,5 @@
 from textwrap import dedent
+from pathlib import Path
 
 
 def day1(input: str) -> int:
@@ -15,10 +16,13 @@ def day1(input: str) -> int:
 
   final = 0
   for l, r in zip(left, right):
-    final += r - l
+    final += abs(r - l)
 
   return final
 
+def load_part1() -> str:
+  with Path('day-01/part1.txt').open('rt') as f:
+    return f.read()
 
 TEST_INPUT = dedent("""
   3   4
@@ -32,3 +36,9 @@ TEST_INPUT = dedent("""
 if __name__ == "__main__":
   assert day1(TEST_INPUT) == 11
   print("Tests pass")
+
+  part1 = load_part1()
+  result = day1(part1)
+  # 52658 is too low. We need to take the *absolute value* of the difference.
+  # That did it. It's 1319616.
+  print(f"Part 1 result: {result}")
