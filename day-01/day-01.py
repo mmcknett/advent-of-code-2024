@@ -33,12 +33,20 @@ TEST_INPUT = dedent("""
   3   3
   """)
 
-if __name__ == "__main__":
+def test():
   assert day1(TEST_INPUT) == 11
   print("Tests pass")
 
+def part1():
   part1 = load_part1()
   result = day1(part1)
   # 52658 is too low. We need to take the *absolute value* of the difference.
   # That did it. It's 1319616.
   print(f"Part 1 result: {result}")
+  assert result == 1319616
+
+def part2():
+  pass
+
+if __name__ == "__main__":
+  part1()
