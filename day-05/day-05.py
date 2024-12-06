@@ -1,5 +1,6 @@
 from pathlib import Path
 from collections import defaultdict
+import functools
 
 sample = Path('day-05/sample.txt').read_text()
 input = Path('day-05/input.txt').read_text()
@@ -53,11 +54,41 @@ def check_input(page_list, less_map):
     
   return True
 
+def d5p2():
+  less_map, puzzle_inputs = load(sample)
+  answer = sum_corrected_middles(less_map, puzzle_inputs)
+  print(f"Part 2 sample answer: {answer}")
+  assert answer == 123
+
+  less_map, puzzle_inputs = load(input)
+  answer = sum_corrected_middles(less_map, puzzle_inputs)
+  print(f"Part 2 input answer: {answer}")
+  answer == 4971
+
+def sum_corrected_middles(less_map, puzzle_inputs):
+    cmp_fn = make_cmp(less_map)
+    middles = []
+    for p_in in puzzle_inputs:
+      res = sorted(p_in, key=functools.cmp_to_key(cmp_fn))
+      if res != p_in:
+        mid = res[len(res)//2]
+        middles.append(int(mid))
+    answer = sum(middles)
+    return answer
 
 def lt(a, b, less_map):
   return b in less_map[a]
+
+def make_cmp(less_map):
+  def cmp(a, b):
+    if a == b:
+      return 0
+    less = lt(a, b, less_map)
+    return -1 if less else 1
+  return cmp
 
 
 if __name__ == '__main__':
   test()
   d5p1()
+  d5p2()
