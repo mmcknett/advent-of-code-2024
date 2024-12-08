@@ -42,7 +42,7 @@ def neg(p):
 
 assert neg((1, -2)) == (-1, 2)
 
-def get_antinodes(freq_id, freqs):
+def get_antinodes(freq_id, freqs, grid):
   positions = list(freqs[freq_id])
   antinodes = set()
   for i, pos in enumerate(positions):
@@ -56,6 +56,28 @@ def get_antinodes(freq_id, freqs):
 
   return antinodes
 
+def get_antinodes_with_harmonics(freq_id, freqs, grid):
+  positions = list(freqs[freq_id])
+  antinodes = set()
+  for i, pos in enumerate(positions):
+    for j in range(i+1, len(positions)):
+      pos_2 = positions[j]
+      diff = sub(pos_2, pos)
+      antinodes.add(pos)
+      antinodes.add(pos_2)
+      # Forward
+      c = add(pos_2, diff)
+      while in_bounds(c[0], c[1], grid):
+        antinodes.add(c)
+        c = add(c, diff)
+      # Backward
+      c = sub(pos, diff)
+      while in_bounds(c[0], c[1], grid):
+        antinodes.add(c)
+        c = sub(c, diff)
+
+  return antinodes
+
 def repr_antinodes(grid, antinode_set):
   gridcopy = grid.copy()
   res = []
@@ -66,13 +88,13 @@ def repr_antinodes(grid, antinode_set):
     res.append(''.join(row))
   return '\n'.join(res)
 
-assert repr_antinodes(onepair, get_antinodes('a', freqs(onepair))) == Path("day-08/sample_onepair_expectedantinodes.txt").read_text()
+assert repr_antinodes(onepair, get_antinodes('a', freqs(onepair), onepair)) == Path("day-08/sample_onepair_expectedantinodes.txt").read_text()
 
-def count_antinodes(grid):
+def count_antinodes(grid, antinode_fn=get_antinodes):
   all_freqs = freqs(grid)
   all_antinodes = set()
   for f in all_freqs:
-    ans = get_antinodes(f, all_freqs)
+    ans = antinode_fn(f, all_freqs, grid)
     ans = {an for an in ans if in_bounds(an[0], an[1], grid)}
     all_antinodes = all_antinodes.union(ans)
   answer = len(all_antinodes)
@@ -87,5 +109,15 @@ def d8p1():
   print(f"Part 1 puzzle: {answer} antinodes")
   assert answer == 336
 
+def d8p2():
+  answer = count_antinodes(sample, antinode_fn=get_antinodes_with_harmonics)
+  print(f"Part 2 sample: {answer} antinodes")
+  assert answer == 34
+
+  answer = count_antinodes(puzzle, antinode_fn=get_antinodes_with_harmonics)
+  print(f"Part 2 puzzle: {answer} antinodes")
+  assert answer == 1131
+
 if __name__ == "__main__":
   d8p1()
+  d8p2()
