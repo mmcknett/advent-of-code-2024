@@ -18,3 +18,5 @@ At each position in the run, see what would happen if an obstruction was placed 
 
 This will be quadratic in the number of steps taken, so not great, but probably fast enough?
 
+## Day 08
+
