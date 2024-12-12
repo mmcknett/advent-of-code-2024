@@ -20,3 +20,14 @@ This will be quadratic in the number of steps taken, so not great, but probably 
 
 ## Day 08
 
+## Day 11
+Skipped days 9 and 10 to do the current day today.
+
+It's probably useful to know the factors of 2024, which are (11, 23, 2, 2, 2). It might also be worth knowing that the final digit of 2024^i is 6 for even `i` and 4 for odd `i`. This also might be useful:
+
+```python
+[len(str(2024**i)) for i in range(25)]
+[1, 4, 7, 10, 14, 17, 20, 24, 27, 30, 34, 37, 40, 43, 47, 50, 53, 57, 60, 63, 67, 70, 73, 77, 80]
+```
+
+Turned out, recursion with memoization was the simplest way.
