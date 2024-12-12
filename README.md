@@ -31,3 +31,6 @@ It's probably useful to know the factors of 2024, which are (11, 23, 2, 2, 2). I
 ```
 
 Turned out, recursion with memoization was the simplest way.
+
+## Day 12
+
