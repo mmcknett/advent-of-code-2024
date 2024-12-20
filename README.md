@@ -36,3 +36,4 @@ Turned out, recursion with memoization was the simplest way.
 
 ## Day 14
 
+## Day 19
