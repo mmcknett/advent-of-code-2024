@@ -37,3 +37,6 @@ Turned out, recursion with memoization was the simplest way.
 ## Day 14
 
 ## Day 19
+
+## Day 9
+At this point, I'm going back to some of the puzzles I haven't yet finished.
