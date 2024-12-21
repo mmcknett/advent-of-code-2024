@@ -20,11 +20,7 @@ class Block():
   
   def __str__(self):
     return (str(self.id) if self.id != FREE else '.') * self.size
-  
-  # def __eq__(self, other):
-  #   if other is None:
-  #     return False
-  #   return self.id == other.id and self.size == other.size
+
   
   def __hash__(self) -> int:
     return (self.id, self.size).__hash__()
@@ -178,36 +174,9 @@ def d9p1():
 
 d9p1()
 
-# def compact_no_frag(blocks: list[Block]):
-#   size_map = free_blocks(blocks)
-#   result = blocks.copy()
-#   i = 0
-#   for b in reversed(blocks):
-#     dest = next(next_available(size_map, b.size))
-#     if dest == None:
-#       i += 1
-#       continue
-
-#     # In the result, replace the origin block with a free block
-#     # and replace the destination block with the moved block.
-#     # Make sure
-#     result[i] = Block(FREE, b.size)
-
-# def free_blocks(blocks: list[Block]) -> list[set]:
-#   size_map = [[]] * 10 # files are limited to size 0 - 9
-#   for i, b in enumerate(blocks):
-#     if not b.is_free():
-#       continue
-#     size_map[b.size].append(i)
-
-#   assert len(size_map[0]) == 0, "There should be no size-zero free blocks"
-#   return size_map
-
-# def next_available(size_map, size_desired) -> int | None:
-#   for i in range(size_desired, len(size_map)):
-#     if len(size_map[i]) > 0:
-#       return size_map[i][0]
-#   return None
+##
+## Part 2
+##
 
 # Doubly linked list checking
 def make_test_list():
